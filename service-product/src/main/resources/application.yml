@@ -1,0 +1,21 @@
+server:
+  port: 9090
+
+spring:
+  datasource:
+    url: jdbc:postgresql://java_db:5432/arqui_soft
+    username: postgres
+    password: admin1234
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate.format_sql: true
+  application:
+    name: service-product
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://service-registry:8099/eureka

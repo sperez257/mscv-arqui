@@ -4,6 +4,7 @@ import com.example.product.entity.ImageModel;
 import com.example.product.entity.Product;
 import com.example.product.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -68,15 +69,7 @@ public class ProductController {
         productService.deleteProductDetails(productId);
     }
 
-    @GetMapping("/{productId}")
-    public Product getProductById(@PathVariable("productId") Integer productId) {
-        Product product = productService.findById(productId);
-        if(product != null){
-            return product;
-        } else {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Product Not Found");
-        }
-    }
+
 
 
 }

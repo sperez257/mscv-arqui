@@ -4,6 +4,7 @@ import com.example.serviceuser.dao.RoleDao;
 import com.example.serviceuser.dao.UserDao;
 import com.example.serviceuser.entity.Role;
 import com.example.serviceuser.entity.User;
+import com.example.serviceuser.security.JwtUtil;
 import net.bytebuddy.utility.RandomString;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -130,13 +131,14 @@ public class UserService {
         }
     }
 
-    public User findById(String username) {
-        Optional<User> user = userDao.findById(username);
-        return user.orElse(null);
-    }
+
 
     public String getEncodedPassword(String password) {
         return passwordEncoder.encode(password);
+    }
+
+    public User findByUsername(String username) {
+        return userDao.findByUserName(username);
     }
 
 }

@@ -1,11 +1,13 @@
 package com.example.serviceuser.controller;
 
 import com.example.serviceuser.entity.User;
+import com.example.serviceuser.security.JwtUtil;
 import com.example.serviceuser.service.UserService;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +17,7 @@ import jakarta.mail.MessagingException;
 import jakarta.servlet.http.HttpServletRequest;
 import java.io.UnsupportedEncodingException;
 
+@CrossOrigin(origins = "http://localhost:4200")
 @Controller
 public class UserController {
     @Autowired
@@ -57,15 +60,20 @@ public class UserController {
             return "verify_fail";
         }
     }
+    //get current user by token
+    @GetMapping("/me")
+    public ResponseEntity<User> getUser(@RequestHeader("Authorization") String token) {
+        String jwtToken = token.substring(7); // Eliminar el prefijo "Bearer "
+        String username = JwtUtil.extractUsername(jwtToken);
+        User user = userService.findByUsername(username);
+        return new ResponseEntity<>(user, HttpStatus.OK);
+    }
 
-    @GetMapping("/{username}")
-    public User getUserByUsername(@PathVariable("username") String username) {
-        User user = userService.findById(username);
-        if(user != null){
-            return user;
-        } else {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User Not Found");
-        }
+    //get user by username
+    @GetMapping("/users/{username}")
+    public ResponseEntity<User> getUserByUsername(@PathVariable(name = "username") String username) {
+        User user = userService.findByUsername(username);
+        return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
 

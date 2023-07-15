@@ -21,6 +21,7 @@ import java.io.IOException;
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
+    public static String CURRENT_USER = "";
     @Autowired
     private final JwtUtil jwtService;
     @Autowired
@@ -42,6 +43,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         }
         jwt= authHeader.substring(7);
         userEmail=jwtService.extractUsername(jwt);
+        CURRENT_USER = userEmail;
         if (userEmail != null && SecurityContextHolder.getContext().getAuthentication()==null){
             UserDetails userDetails=this.userDetailsService.loadUserByUsername(userEmail);
 

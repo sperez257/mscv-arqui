@@ -4,7 +4,6 @@ package com.example.serviceuser.config;
 import com.example.serviceuser.dao.UserDao;
 import com.example.serviceuser.security.JwtUserDetails;
 import lombok.RequiredArgsConstructor;
-import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -24,13 +23,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class GeneralConfig {
 
     private final UserDao userRepository;
-
-
-    @Bean
-    public ModelMapper modelMapper(){
-        return new ModelMapper();
-    }
-
 
     //Revisar
     @Bean

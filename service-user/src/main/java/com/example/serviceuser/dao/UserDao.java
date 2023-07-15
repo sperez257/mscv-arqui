@@ -12,4 +12,7 @@ public interface UserDao extends CrudRepository<User, String> {
 
     @Query("SELECT u FROM User u WHERE u.verificationCode = ?1")
     public User findByVerificationCode(String code);
+
+    User findByUserName(String username);
+
 }
